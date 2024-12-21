@@ -42,7 +42,7 @@ export default function TestChart1({ data }: { data: any }) {
           }
       else{
          console.warn(`No matching data found for ticket: ${data.ticket}`);
-        setChartData([]); // Clear chart data if no match
+        setChartData([]); 
       }
   
     };

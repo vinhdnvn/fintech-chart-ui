@@ -1,45 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import axios from "axios";
-// export default function TestChart() {
-// //   const [data, setData] = useState<Stock[]>([]);
 
-// //   useEffect(() => {
-// //     async function fetchData() {
-// //       const fetchedData = await getData();
-// //       setData(fetchedData);
-// //     }
-// //     fetchData();
-// //   }, []);
-
-//   return (
-//    <div className="flex flex-col w-full">
-//   <div className="mb-2 mx-5">
-//     <h1 className="text-gray-300 text-xl font-bold opacity-25">Line Chart</h1>
-//     <p className="text-4xl font-semibold">$5.32b</p>
-//   </div>
-
-//   <div className="flex justify-center">
-//     <ChartContainer config={chartConfig} className="min-h-[250px] w-[85%]">
-//       <LineChart accessibilityLayer data={chartData}>
-//         <CartesianGrid vertical={false} />
-//         <XAxis
-//           dataKey="month"
-//           tickLine={false}
-//           tickMargin={10}
-//           axisLine={false}
-//           tickFormatter={(value) => value.slice(0, 3)}
-//         />
-//         <ChartTooltip content={<ChartTooltipContent labelKey="visitors" nameKey="browser" />} />
-//         {/* <Line dataKey="desktop" type="monotone" stroke="var(--color-desktop)" strokeWidth={2} dot={false} /> */}
-//         <Line dataKey="mobile" type="monotone" stroke="var(--color-mobile)" strokeWidth={2} dot={false} />
-//       </LineChart>
-//     </ChartContainer>
-//   </div>
-// </div>
-
-//   );
-// }
 import  { useEffect, useState } from "react";
 import {  CartesianGrid, XAxis, Tooltip, BarChart, Bar } from "recharts";
 import { ChartContainer } from "../ui/chart";
@@ -55,17 +17,32 @@ export default function TestChart1({ data }: { data: any }) {
 
   // const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>({});
 
-  useEffect(() => {
+ useEffect(() => {
     const fetchData = async () => {
-      // console.log(data.ticket);
+   
       const response = await axios.get('https://67258096c39fedae05b4e75d.mockapi.io/fintech');
-        const timeSeries = response.data[0]["Time Series (5min)"];
-        const formattedData = Object.entries(timeSeries).map(([timestamp, values]) => ({
-        time: timestamp.split(" ")[1], // Only extract the time (e.g., 19:55:00)
-        price: parseFloat((values as { "4. close": string })["4. close"]), // Closing price
-      }));
+      const matchedItem = response.data.find(
+        (item: any) => item["Meta Data"]["2. Symbol"] === data.ticket
+      );
+
+
+          if (matchedItem) {
+        const timeSeries = matchedItem["Time Series (5min)"];
+        const formattedData = Object.entries(timeSeries).map(
+          ([timestamp, values]) => ({
+            time: timestamp.split(" ")[1], 
+            price: parseFloat(
+              (values as { "4. close": string })["4. close"]
+            ), 
+          })
+        );
       setChartData(formattedData);
-      // console.log('Test Chart1',timeSeriesData);
+          }
+      else{
+         console.warn(`No matching data found for ticket: ${data.ticket}`);
+        setChartData([]); 
+      }
+  
     };
     fetchData();
   }, [data]);
