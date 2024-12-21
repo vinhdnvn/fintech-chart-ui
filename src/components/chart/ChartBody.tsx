@@ -11,12 +11,12 @@ export default function ChartBody() {
       {/* Chart 1 */}
       <div className="flex-grow basis-0 rounded-xl flex items-center bg-[#191B1F] h-full">
          {/* <FirstStock /> */}
-         <TestChart1 />
+         {/* <TestChart1 /> */}
       </div>
 
       {/* Chart 2 */}
       <div className="flex-grow basis-0 rounded-xl flex items-center bg-[#191B1F] h-full">
-      <TestChart2 />
+      {/* <TestChart2 /> */}
       </div>
     </div>
   );

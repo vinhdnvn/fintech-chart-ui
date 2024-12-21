@@ -6,28 +6,28 @@ export type Stock = {
   change_amount: string;
   change_percent: string;
   volume: string;
+  data? :{ time: string, price: number}[]
 };
 
 export const columns: ColumnDef<Stock>[] = [
   {
-    header: () => <div className="text-left ">Name</div>,
-   cell: ({ row }) => {
-        const ticket = row.getValue("ticket");
-    
-        return <div className="text-left font-medium w-[280px]">{ticket as string}</div>;
-        },
-    accessorKey: "ticket",
+    header: "#",
+    cell: ({ row }) => <div className="text-left">{row.index + 1}</div>,
+    accessorKey: "id",
   },
-  {
+{
+    header: "Ticker",
+    accessorKey: "ticket",
+    cell: ({ row }) => <div className="text-left font-bold">{row.getValue("ticket")}</div>,
+  },
+   {
     header: () => <div className="text-right">Price</div>,
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
-
-      const formattedPrice = (price / 1000).toFixed(2); 
-
-      return <div className=" font-medium text-right">${formattedPrice}k</div>;
-    },
     accessorKey: "price",
+    cell: ({ row }) => (
+      <div className="text-right">
+        ${parseFloat(row.getValue("price")).toFixed(2)}
+      </div>
+    ),
   },
   {
     header: ()=> <div className="text-right">Price Change</div>,
@@ -81,22 +81,15 @@ return (
   accessorKey: "volume",
 },
   {
-    header: () => <div className="text-right">Change Global</div>,
+    header: () => <div className="text-right">Change %</div>,
     accessorKey: "change_percent",
     cell: ({ row }) => {
-        const changePercent = row.getValue("change_percent");
-    
-        const isPositive = (changePercent as string).startsWith("+");
-        const isNegative = (changePercent as string).startsWith("-");
-    
-        const arrow = isPositive ? "↑" : isNegative ? "↓" : "";
-        const textColor = isPositive ? "text-green-500" : isNegative ? "text-red-500" : "text-gray-900";
-    
-        return (
-            <div className={`text-right font-medium ${textColor}`}>
-            {arrow} {changePercent as string}
-            </div>
-        );
-        }
+      const isPositive = (row.getValue("change_percent") as string).startsWith("+");
+      return (
+        <div className={`text-right ${isPositive ? "text-green-500" : "text-red-500"}`}>
+          {row.getValue("change_percent")}
+        </div>
+      );
+    },
   },
 ];
