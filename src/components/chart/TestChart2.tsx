@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import axios from "axios";
-import { time } from "console";
 // export default function TestChart() {
 // //   const [data, setData] = useState<Stock[]>([]);
 
@@ -40,31 +40,11 @@ import { time } from "console";
 
 //   );
 // }
-import React, { useEffect, useState } from "react";
-import { LineChart, Line, CartesianGrid, XAxis, Tooltip, BarChart, Bar } from "recharts";
+import  { useEffect, useState } from "react";
+import {  CartesianGrid, XAxis, Tooltip, BarChart, Bar } from "recharts";
 import { ChartContainer } from "../ui/chart";
 
-interface TimeSeriesData {
-  [timestamp: string]: {
-    "1. open": string;
-    "2. high": string;
-    "3. low": string;
-    "4. close": string;
-    "5. volume": string;
-  };
-}
 
-interface ApiResponse {
-  "Meta Data": {
-    "1. Information": string;
-    "2. Symbol": string;
-    "3. Last Refreshed": string;
-    "4. Interval": string;
-    "5. Output Size": string;
-    "6. Time Zone": string;
-  };
-  "Time Series (5min)": TimeSeriesData;
-}
 
 
 export default function TestChart1({ data }: { data: any }) {

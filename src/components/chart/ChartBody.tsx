@@ -1,7 +1,3 @@
-import { FirstStock } from "./items/FirstStock";
-import TestChart1 from "./TestChart1";
-import TestChart2 from "./TestChart2";
-
 
 
 export default function ChartBody() {

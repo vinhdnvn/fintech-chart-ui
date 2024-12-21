@@ -3,7 +3,7 @@
 
 
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LineChart, Line, CartesianGrid, XAxis, Tooltip } from "recharts";
 import { ChartContainer } from "../ui/chart";
 import axios from "axios";
@@ -21,7 +21,7 @@ export default function TestChart1({ data }: { data: any }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      // console.log(data.ticket);
+   
       const response = await axios.get('https://67258096c39fedae05b4e75d.mockapi.io/fintech');
       const matchedItem = response.data.find(
         (item: any) => item["Meta Data"]["2. Symbol"] === data.ticket
@@ -35,7 +35,7 @@ export default function TestChart1({ data }: { data: any }) {
             time: timestamp.split(" ")[1], 
             price: parseFloat(
               (values as { "4. close": string })["4. close"]
-            ), // Closing price
+            ), 
           })
         );
       setChartData(formattedData);
@@ -44,7 +44,7 @@ export default function TestChart1({ data }: { data: any }) {
          console.warn(`No matching data found for ticket: ${data.ticket}`);
         setChartData([]); // Clear chart data if no match
       }
-      // console.log('Test Chart1',timeSeriesData);
+  
     };
     fetchData();
   }, [data]);

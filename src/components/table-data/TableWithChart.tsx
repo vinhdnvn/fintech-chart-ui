@@ -1,10 +1,10 @@
-import React, { useState } from "react";
 import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
 import { columns, Stock } from "./columns";
 import TestChart1 from "../chart/TestChart1";
 import TestChart2 from "../chart/TestChart2";
 import VolumnBar from "../volumn/VolumnBar";
+import { useState } from "react";
 
 
 export default function TableWithChart({ data }: { data: Stock[] }) {
